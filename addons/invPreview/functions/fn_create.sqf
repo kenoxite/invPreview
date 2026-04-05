@@ -68,6 +68,14 @@ private _renderTarget_Bottom = "rendertarget_KIV_preview_bottom";
 _camBottom cameraEffect ["INTERNAL", "BACK", _renderTarget_Bottom];
 KIV_preview_renderTarget_Bottom = _renderTarget_Bottom;
 
+// Add lighting
+private _light = "#lightpoint" createVehicle _centerPos;
+_light setLightBrightness 20;
+_light setLightAmbient [1,1,1];
+_light setLightColor [0,0,0];
+_light lightAttachObject [_background, [0, 0, -20 * 7]];
+KIV_preview_light = _light;
+
 // Apply PiP color corrections and effects
 private _effect = 3;
 private _brightness = 1.1;
@@ -76,20 +84,7 @@ private _isNight = (apertureParams #3) <= 5.5;
 if (_isNight) then {
     // NVG effect at night
     _effect = 1;
-    _brightness = 1;
-    _contrast = 1;
-    if (!isNil "KIV_preview_light") then {
-        deleteVehicle KIV_preview_light;
-        KIV_preview_light = nil;
-    };
-} else {
-    // Add lighting
-    private _light = "#lightpoint" createVehicle _centerPos;
-    _light setLightBrightness 20;
-    _light setLightAmbient [1,1,1];
-    _light setLightColor [0,0,0];
-    _light lightAttachObject [_background, [0, 0, -20 * 7]];
-    KIV_preview_light = _light;
+    _light setLightBrightness 5;
 };
 _renderTarget_Top setPiPEffect [_effect, 1, _brightness, _contrast, 0, [0,0,0,0], [1,1,1,1], [1,1,1,1]];
 _renderTarget_Bottom setPiPEffect [_effect, 1, _brightness, _contrast, 0, [0,0,0,0], [1,1,1,1], [1,1,1,1]];
