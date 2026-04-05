@@ -28,8 +28,10 @@ KIV_preview_rotationHandle = [_angles, _radius] spawn {
         KIV_preview_camBottom camSetPos _camPos;
         KIV_preview_camBottom camCommit 2;
         
-        waitUntil {camCommitted KIV_preview_camTop};
-        
+        waitUntil {isNil "KIV_preview_camTop" || {isNull KIV_preview_camTop} || {camCommitted KIV_preview_camTop}};
+        if (isNil "KIV_preview_camTop") exitWith {};
+        if (isNull KIV_preview_camTop) exitWith {};
+
         _index = _index + 1;
         if (_index >= _countAngles) then { _index = 0; };
         _unitPos = getPos KIV_preview_unit;

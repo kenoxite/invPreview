@@ -30,22 +30,28 @@ if (isNil "KIV_preview_defaultPos") then {
     };
 };
 
-// Remove existing event handlers if they exist
-if (!isNil "KIV_EH_preview_invOpened") then {
-    player removeEventHandler ["InventoryOpened", KIV_EH_preview_invOpened];
-};
-if (!isNil "KIV_EH_preview_invClosed") then {
-    player removeEventHandler ["InventoryClosed", KIV_EH_preview_invClosed];
-};
-if (!isNil "KIV_EH_preview_take") then {
-    player removeEventHandler ["Take", KIV_EH_preview_take];
-};
-if (!isNil "KIV_EH_preview_put") then {
-    player removeEventHandler ["Put", KIV_EH_preview_put];
-};
+// Add handlers to current player
+[player] call KIV_fnc_addEventHandlers;
 
-// Add new event handlers
-KIV_EH_preview_invOpened = player addEventHandler ["InventoryOpened", KIV_fnc_inventoryOpened];
-KIV_EH_preview_invClosed = player addEventHandler ["InventoryClosed", KIV_fnc_inventoryClosed];
-KIV_EH_preview_take = player addEventHandler ["Take", KIV_fnc_take];
-KIV_EH_preview_put = player addEventHandler ["Put", KIV_fnc_put];
+// Continuous player monitoring
+[] spawn {
+    private _currentPlayer = player;
+    private _lastPlayer = player;
+    
+    while {true} do {
+        _currentPlayer = player;
+        
+        // Check if player changed
+        if (!isNull _currentPlayer && {_currentPlayer != _lastPlayer}) then {
+            // Remove handlers from old player
+            if (!isNull _lastPlayer) then {
+                [_lastPlayer] call KIV_fnc_removeEventHandlers;
+            };
+            // Add handlers to new player
+            [_currentPlayer] call KIV_fnc_addEventHandlers;
+            _lastPlayer = _currentPlayer;
+        };
+        
+        sleep 1;
+    };
+};
