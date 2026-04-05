@@ -2,7 +2,7 @@
 // Creates the preview environment: background sphere, cloned unit, cameras, render targets, and HUD
 
 if (!isPiPEnabled) exitWith {
-    systemChat "Enable Picture-in-Picture in video settings for character preview";
+    systemChat "WARNING: Enable Picture-in-Picture (PIP) in video settings for character preview";
 };
 
 #include "\z\kiv\addons\invPreview\idc.hpp"

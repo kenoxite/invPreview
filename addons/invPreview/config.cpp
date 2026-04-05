@@ -13,9 +13,7 @@ class CfgPatches {
     };
 };
 
-class RscTitles {
-    #include "gui.hpp"
-};
+#include "\z\kiv\addons\invPreview\gui.hpp"
 
 class CfgFunctions {
     class KIV {
