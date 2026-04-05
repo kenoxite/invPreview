@@ -4,7 +4,7 @@
 
 Shows a real-time 3D model of your character in the inventory screen, with automatic stance changes based on equipped weapons.
 
-You can check the already packed version by visiting this addon's [Steam Workshop](xxx) page.
+You can check the already packed version by visiting this addon's [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3700405075) page.
 
 ### Features
 
