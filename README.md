@@ -1,4 +1,4 @@
-# Inventory Preview
+![Inventory Preview](https://i.postimg.cc/SNPXFFRj/logo-web.png "Inventory Preview")
 
 ### Info
 
