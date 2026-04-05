@@ -29,3 +29,9 @@ if (_put >= 0) then {
     _unit removeEventHandler ["Put", _put];
     _unit setVariable ["KIV_EH_preview_put", nil];
 };
+
+private _killed = _unit getVariable ["KIV_EH_preview_killed", -1];
+if (_killed >= 0) then {
+    _unit removeEventHandler ["Killed", _killed];
+    _unit setVariable ["KIV_EH_preview_killed", nil];
+};
