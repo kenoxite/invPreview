@@ -1,9 +1,11 @@
 // KIV_fnc_create
 // Creates the preview environment: background sphere, cloned unit, cameras, render targets, and HUD
 
-if (!isPipEnabled) exitWith {
+if (!isPiPEnabled) exitWith {
     systemChat "Enable Picture-in-Picture in video settings for character preview";
 };
+
+#include "\z\kiv\addons\invPreview\idc.hpp"
 
 call KIV_fnc_cleanup;
 
@@ -37,7 +39,7 @@ KIV_preview_unit = _unit;
 call KIV_fnc_stance;
 
 // Add lighting
-private _light = "#lightpoint" createvehicle _centerPos;
+private _light = "#lightpoint" createVehicle _centerPos;
 _light setLightBrightness 20;
 _light setLightAmbient [1,1,1];
 _light setLightColor [0,0,0];

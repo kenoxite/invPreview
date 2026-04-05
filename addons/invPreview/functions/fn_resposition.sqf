@@ -1,6 +1,8 @@
 // KIV_fnc_reposition
 // Moves and resizes the preview group and its child controls
 
+#include "\z\kiv\addons\invPreview\idc.hpp"
+
 params [["_posX", ""], ["_posY", ""], ["_width", ""], ["_height", ""]];
 
 private _display = uiNamespace getVariable "KIV_preview_display";

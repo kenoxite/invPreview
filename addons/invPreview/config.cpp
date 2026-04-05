@@ -20,14 +20,14 @@ class RscTitles {
 class CfgFunctions {
     class KIV {
         class Init {
-            file = "\z\KIV\addons\functions";
+            file = "\z\kiv\addons\invPreview\functions";
             class postInit {
                 postInit = 1;
-                file = "\z\KIV\addons\initClient.sqf";
+                file = "\z\kiv\addons\invPreview\initClient.sqf";
             };
         };
         class Main {
-            file = "\z\KIV\addons\functions";
+            file = "\z\kiv\addons\invPreview\functions";
             class cleanup {};
             class create {};
             class inventoryClosed {};
