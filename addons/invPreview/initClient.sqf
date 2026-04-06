@@ -3,7 +3,7 @@
 
 // Detect Better Inventory mod
 private _cfgPatches = configFile >> "CfgPatches";
-KNX_betterInventory = isClass(_cfgPatches >> "bettinv_main");
+KIV_betterInventory = isClass(_cfgPatches >> "bettinv_main");
 _cfgPatches = nil;
 
 // Include GUI grid macros
@@ -12,7 +12,7 @@ _cfgPatches = nil;
 // Set default position based on mod detection
 if (isNil "KIV_preview_defaultPos") then {
     KIV_preview_defaultPos = call {
-        if (KNX_betterInventory) exitWith {
+        if (KIV_betterInventory) exitWith {
             [
                 safeZoneX + safeZoneW * 0.15729167,
                 safeZoneY + safeZoneH * 0.39351852,

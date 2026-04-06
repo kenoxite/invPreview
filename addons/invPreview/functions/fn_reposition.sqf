@@ -13,7 +13,7 @@ private _group = _display displayCtrl IDC_PREVIEW_GROUP;
 if (typeName _group != "CONTROL") exitWith {};
 
 _group ctrlSetPosition [_posX, _posY, _width, _height];
-_group ctrlSetFade ([0.25, 0.2] select KNX_betterInventory);
+_group ctrlSetFade ([0.25, 0.2] select KIV_betterInventory);
 _group ctrlCommit 0;
 
 private _topControl = _display displayCtrl IDC_PREVIEW_TOP;

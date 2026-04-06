@@ -15,7 +15,7 @@ private _background = createVehicleLocal ["Sphere_3DEN", _centerPos, [], 0, "non
 _background setPosATL _centerPos;
 _background setDir 0;
 private _backgroundTexture = call {
-    if (KNX_betterInventory) exitWith {
+    if (KIV_betterInventory) exitWith {
         "#(argb,8,8,3)color(0.3,0.3,0.3,0.05)"
     };
     "#(argb,8,8,3)color(1,1,1,0)"
@@ -69,25 +69,23 @@ _camBottom cameraEffect ["INTERNAL", "BACK", _renderTarget_Bottom];
 KIV_preview_renderTarget_Bottom = _renderTarget_Bottom;
 
 // Add lighting
-private _light = "#lightpoint" createVehicle _centerPos;
-_light setLightBrightness 20;
-_light setLightAmbient [1,1,1];
-_light setLightColor [0,0,0];
-_light lightAttachObject [_background, [0, 0, -20 * 7]];
+private _light = "#lightpoint" createVehicle (_unit modelToWorld [0, 2, 1.3]);
+_light setLightAmbient [1,1,1]; 
+_light setLightColor [0,0,0]; 
+_light setLightDayLight true; 
+_light setLightAttenuation [0, 0.5, 1, 3, 0, 4, 5];
 KIV_preview_light = _light;
 
-// Apply PiP color corrections and effects
-private _effect = 3;
-private _brightness = 1.1;
-private _contrast = [1.5, 1.8] select KNX_betterInventory;
-private _isNight = (apertureParams #3) <= 5.5;
-if (_isNight) then {
-    // NVG effect at night
-    _effect = 1;
-    _light setLightBrightness 5;
+private _luminance = apertureParams #3;
+private _brightness = [5, 10] select KIV_betterInventory;
+if (_luminance < 800) then { _brightness = _brightness * ([0.5, 0.3] select KIV_betterInventory) };
+// NVG effect at night
+if (_luminance <= 5.5) then {
+    _renderTarget_Top setPiPEffect [1];
+    _renderTarget_Bottom setPiPEffect [1];
+    _brightness = [0.2, 0.3] select KIV_betterInventory;
 };
-_renderTarget_Top setPiPEffect [_effect, 1, _brightness, _contrast, 0, [0,0,0,0], [1,1,1,1], [1,1,1,1]];
-_renderTarget_Bottom setPiPEffect [_effect, 1, _brightness, _contrast, 0, [0,0,0,0], [1,1,1,1], [1,1,1,1]];
+_light setLightBrightness _brightness; 
 
 // Display HUD
 private _layer = "KIV_preview_layer" call BIS_fnc_rscLayer;
