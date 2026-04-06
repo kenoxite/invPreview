@@ -2,14 +2,14 @@ class CfgPatches {
     class invPreview {
         units[] = {};
         weapons[] = {};
-        requiredVersion = 2.10;
+        requiredVersion = 2.20;
         requiredAddons[] = {};
         author = "kenoxite";
         authors[] = {"kenoxite"};
         url = "";
-        version = "1.3.1";
-        versionStr = "1.3.1";
-        versionAr[] = {1,3,1};
+        version = "1.3.2";
+        versionStr = "1.3.2";
+        versionAr[] = {1,3,2};
     };
 };
 

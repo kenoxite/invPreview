@@ -19,3 +19,5 @@ private _put = _unit addEventHandler ["Put", KIV_fnc_put];
 _unit setVariable ["KIV_EH_preview_put", _put];
 private _killed = _unit addEventHandler ["Killed", KIV_fnc_cleanup];
 _unit setVariable ["KIV_EH_preview_killed", _killed];
+private _weaponChanged = _unit addEventHandler ["WeaponChanged", KIV_fnc_stance];
+_unit setVariable ["KIV_EH_preview_weaponChanged", _weaponChanged];
