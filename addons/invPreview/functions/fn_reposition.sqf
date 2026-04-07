@@ -22,10 +22,11 @@ private _bottomControl = _display displayCtrl IDC_PREVIEW_BOTTOM;
 if (!isNull _topControl && !isNull _bottomControl) then {
     private _boxHeight = _height / 2;
     private _boxWidth = _boxHeight;
+    private _centerOffset = if (KIV_betterInventory) then { (_width - _boxWidth) / 2 } else { 0 };
     
-    _topControl ctrlSetPosition [0, 0, _boxWidth, _boxHeight];
+    _topControl ctrlSetPosition [_centerOffset, 0, _boxWidth, _boxHeight];
     _topControl ctrlCommit 0;
     
-    _bottomControl ctrlSetPosition [0, _boxHeight, _boxWidth, _boxHeight];
+    _bottomControl ctrlSetPosition [_centerOffset, _boxHeight, _boxWidth, _boxHeight];
     _bottomControl ctrlCommit 0;
 };
