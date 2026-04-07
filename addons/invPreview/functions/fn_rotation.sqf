@@ -1,40 +1,37 @@
 // KIV_fnc_rotation
-// Creates a rotating camera around the preview unit
+// Rotates camera around the preview unit
 
 if (isNil "KIV_preview_unit") exitWith {};
 
 private _radius = 7;
-private _angles = [0,15,30,45,30,15,0,-15,-30,-45,-30,-15];
+private _speed = 15; // Degrees per second (peak to peak)
+private _maxAngle = 45;
 
-KIV_preview_rotationHandle = [_angles, _radius] spawn {
-    params ["_angles", "_radius"];
-    private _index = 0;
-    private _countAngles = count _angles;
+KIV_preview_rotationHandle = [_radius, _speed, _maxAngle] spawn {
+    params ["_radius", "_speed", "_maxAngle"];
+    
     private _unitPos = getPos KIV_preview_unit;
     private _unitDir = getDir KIV_preview_unit;
-    
+    private _startTime = diag_tickTime;
+
     while {!isNil "KIV_preview_unit"} do {
-        private _angle = (_angles # _index) + _unitDir;
-        private _offsetX = _radius * sin _angle;
-        private _offsetY = _radius * cos _angle;
+        private _elapsed = diag_tickTime - _startTime;
+        private _angle = _maxAngle * sin (_elapsed * _speed);
+        private _finalAngle = _unitDir + _angle;
+        
+        private _offsetX = _radius * sin _finalAngle;
+        private _offsetY = _radius * cos _finalAngle;
         private _camPos = [
             (_unitPos # 0) + _offsetX,
             (_unitPos # 1) + _offsetY,
             (_unitPos # 2) + 1.3
         ];
-        
-        KIV_preview_camTop camSetPos _camPos;
-        KIV_preview_camTop camCommit 2;
-        KIV_preview_camBottom camSetPos _camPos;
-        KIV_preview_camBottom camCommit 2;
-        
-        waitUntil {isNil "KIV_preview_camTop" || {isNull KIV_preview_camTop} || {camCommitted KIV_preview_camTop}};
-        if (isNil "KIV_preview_camTop") exitWith {};
-        if (isNull KIV_preview_camTop) exitWith {};
 
-        _index = _index + 1;
-        if (_index >= _countAngles) then { _index = 0; };
-        _unitPos = getPos KIV_preview_unit;
-        _unitDir = getDir KIV_preview_unit;
+        KIV_preview_camTop camPreparePos _camPos;
+        KIV_preview_camTop camCommitPrepared 0;
+        KIV_preview_camBottom camPreparePos _camPos;
+        KIV_preview_camBottom camCommitPrepared 0;
+        
+        sleep 0.033;
     };
 };

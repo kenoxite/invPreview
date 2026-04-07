@@ -18,7 +18,7 @@ private _backgroundTexture = call {
     if (KIV_betterInventory) exitWith {
         "#(argb,8,8,3)color(0.3,0.3,0.3,0.05)"
     };
-    "#(argb,8,8,3)color(1,1,1,0)"
+    "#(argb,8,8,3)color(0.3,0.3,0.3,0.1)"
 };
 _background setObjectTexture [0, _backgroundTexture];
 _background setObjectTexture [1, _backgroundTexture];
@@ -42,22 +42,28 @@ call KIV_fnc_stance;
 private _camPos = _unit modelToWorld [0, 7, 1.3];
 private _camFov = 0.1;
 private _camTop = "camera" camCreate [0, 0, 0];
-_camTop camSetPos _camPos;
-_camTop camSetTarget (_unit modelToWorld [0, 0, 1.45]);
-_camTop camSetFov _camFov;
-_camTop camCommit 0;
+_camTop camPreparePos _camPos;
+_camTop camPrepareTarget (_unit modelToWorld [0, 0, 1.45]);
+_camTop camPrepareFov _camFov;
+_camTop camCommitPrepared 0;
 KIV_preview_camTop = _camTop;
 
 // Setup bottom camera (lower body)
 private _camBottom = "camera" camCreate [0, 0, 0];
-_camBottom camSetPos _camPos;
-_camBottom camSetTarget (_unit modelToWorld [0, 0, 0.4]);
-_camBottom camSetFov _camFov;
-_camBottom camCommit 0;
+_camBottom camPreparePos _camPos;
+_camBottom camPrepareTarget (_unit modelToWorld [0, 0, 0.4]);
+_camBottom camPrepareFov _camFov;
+_camBottom camCommitPrepared 0;
 KIV_preview_camBottom = _camBottom;
 
 // Start camera rotation
-call KIV_fnc_rotation;
+[_camTop, _camBottom] spawn {
+    params ["_camTop", "_camBottom"];
+    waitUntil {isNil "_camTop" || {isNull _camTop} || {camCommitted _camTop && camCommitted _camBottom}};
+    if (isNil "_camTop") exitWith {};
+    if (isNull _camTop) exitWith {};
+    call KIV_fnc_rotation;
+};
 
 // Create render targets
 private _renderTarget_Top = "rendertarget_KIV_preview_top";
