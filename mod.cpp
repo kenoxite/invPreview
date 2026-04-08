@@ -3,7 +3,7 @@ picture = "picture.paa"; // Picture displayed from the expansions menu/ Optimal 
 logoSmall = "logo_small.paa"; // Display next to the item added by the mod
 logo = "logo.paa"; // Logo displayed in the main menu
 logoOver = "logo_over.paa"; // When the mouse is over, in the main menu
-action = ""; // Website URL, that can accessed from the expansions menu
+action = "https://steamcommunity.com/sharedfiles/filedetails/?id=3700405075"; // Website URL, that can accessed from the expansions menu
 tooltipOwned = "Visit Inventory Preview's workshop page!"; // Tool tip displayed when the mouse is left over, in the main menu
 
 // Color used for DLC stripes and backgrounds (RGBA)
