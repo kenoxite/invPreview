@@ -42,25 +42,10 @@ call KIV_fnc_stance;
 
 // Setup top camera (upper body)
 private _camPos = _unit modelToWorld [0, 7, 1.3];
-
-// Get aspect ratio
-(getResolution) params ["", "", "", "", "_aspectRatio"];
-
-// Adjust target height based on aspect ratio
-// Raise the top camera's target on narrower screens
-private _targetHeightTop = 1.45;
-private _targetHeightBottom = 0.4;
-if (_aspectRatio < 1.6) then {
-    private _scale = linearConversion [1.33, 1.6, _aspectRatio, 1.15, 1.0, true];
-    _targetHeightTop = 1.45 * _scale;
-    _targetHeightBottom = 0.4 * _scale;
-};
-
 private _camFov = 0.1;
-
 private _camTop = "camera" camCreate [0, 0, 0];
 _camTop camPreparePos _camPos;
-_camTop camPrepareTarget (_unit modelToWorld [0, 0, _targetHeightTop]);
+_camTop camPrepareTarget (_unit modelToWorld [0, 0, 1.45]);
 _camTop camPrepareFov _camFov;
 _camTop camCommitPrepared 0;
 KIV_preview_camTop = _camTop;
@@ -68,7 +53,7 @@ KIV_preview_camTop = _camTop;
 // Setup bottom camera (lower body)
 private _camBottom = "camera" camCreate [0, 0, 0];
 _camBottom camPreparePos _camPos;
-_camBottom camPrepareTarget (_unit modelToWorld [0, 0, _targetHeightBottom]);
+_camBottom camPrepareTarget (_unit modelToWorld [0, 0, 0.4]);
 _camBottom camPrepareFov _camFov;
 _camBottom camCommitPrepared 0;
 KIV_preview_camBottom = _camBottom;
