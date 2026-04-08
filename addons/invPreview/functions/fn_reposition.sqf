@@ -1,5 +1,5 @@
 // KIV_fnc_reposition
-// Moves and resizes the preview group and its child controls
+// Moves and resizes the preview group and its child control
 
 #include "\z\kiv\addons\invPreview\idc.hpp"
 
@@ -16,17 +16,14 @@ _group ctrlSetPosition [_posX, _posY, _width, _height];
 _group ctrlSetFade 0.3;
 _group ctrlCommit 0;
 
-private _topControl = _display displayCtrl IDC_PREVIEW_TOP;
-private _bottomControl = _display displayCtrl IDC_PREVIEW_BOTTOM;
+private _previewControl = _display displayCtrl IDC_PREVIEW;
 
-if (!isNull _topControl && !isNull _bottomControl) then {
-    private _boxHeight = _height / 2;
-    private _boxWidth = _boxHeight;
-    private _centerOffset = if (KIV_betterInventory) then { (_width - _boxWidth) / 2 } else { 0 };
-    
-    _topControl ctrlSetPosition [_centerOffset, 0, _boxWidth, _boxHeight];
-    _topControl ctrlCommit 0;
-    
-    _bottomControl ctrlSetPosition [_centerOffset, _boxHeight, _boxWidth, _boxHeight];
-    _bottomControl ctrlCommit 0;
+if (!isNull _previewControl) then {
+    private _scale = [0.8, 1] select KIV_betterInventory; 
+    private _boxSize = _height * _scale; 
+    private _centerOffsetX = (_width - _boxSize) / 2; 
+    private _centerOffsetY = (_height - _boxSize) / ([1.7, 2] select KIV_betterInventory); 
+     
+    _previewControl ctrlSetPosition [_centerOffsetX, _centerOffsetY, _boxSize, _boxSize]; 
+    _previewControl ctrlCommit 0;
 };
