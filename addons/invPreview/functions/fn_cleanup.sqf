@@ -3,21 +3,13 @@
 
 private _layer = "KIV_preview_layer" call BIS_fnc_rscLayer;
 
-if (!isNil "KIV_preview_renderTarget_Top") then {
-    KIV_preview_camTop cameraEffect ["terminate", "back", KIV_preview_renderTarget_Top];
-    KIV_preview_renderTarget_Top = nil;
+if (!isNil "KIV_preview_renderTarget") then {
+    KIV_preview_cam cameraEffect ["terminate", "back", KIV_preview_renderTarget];
+    KIV_preview_renderTarget = nil;
 };
-if (!isNil "KIV_preview_renderTarget_Bottom") then {
-    KIV_preview_camBottom cameraEffect ["terminate", "back", KIV_preview_renderTarget_Bottom];
-    KIV_preview_renderTarget_Bottom = nil;
-};
-if (!isNil "KIV_preview_camTop") then {
-    camDestroy KIV_preview_camTop;
-    KIV_preview_camTop = nil;
-};
-if (!isNil "KIV_preview_camBottom") then {
-    camDestroy KIV_preview_camBottom;
-    KIV_preview_camBottom = nil;
+if (!isNil "KIV_preview_cam") then {
+    camDestroy KIV_preview_cam;
+    KIV_preview_cam = nil;
 };
 if (!isNil "KIV_preview_unit") then {
     deleteVehicle KIV_preview_unit;

@@ -27,10 +27,8 @@ KIV_preview_rotationHandle = [_radius, _speed, _maxAngle] spawn {
             (_unitPos # 2) + 1.3
         ];
 
-        KIV_preview_camTop camPreparePos _camPos;
-        KIV_preview_camTop camCommitPrepared 0;
-        KIV_preview_camBottom camPreparePos _camPos;
-        KIV_preview_camBottom camCommitPrepared 0;
+        KIV_preview_cam camPreparePos _camPos;
+        KIV_preview_cam camCommitPrepared 0;
         
         sleep 0.033;
     };

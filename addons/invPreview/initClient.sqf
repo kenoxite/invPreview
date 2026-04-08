@@ -6,9 +6,6 @@ private _cfgPatches = configFile >> "CfgPatches";
 KIV_betterInventory = isClass(_cfgPatches >> "bettinv_main");
 _cfgPatches = nil;
 
-// Include GUI grid macros
-#include "\a3\ui_f\hpp\definecommongrids.inc"
-
 // Set default position based on mod detection
 if (isNil "KIV_preview_defaultPos") then {
     KIV_preview_defaultPos = call {
@@ -22,10 +19,10 @@ if (isNil "KIV_preview_defaultPos") then {
         };
         // Vanilla
         [
-            GUI_GRID_CENTER_X + (1 * GUI_GRID_CENTER_W),
-            GUI_GRID_CENTER_Y + (4 * GUI_GRID_CENTER_H),
-            18 * GUI_GRID_CENTER_W,
-            18 * GUI_GRID_CENTER_H
+            1 *(((safezoneW / safezoneH) min 1.2) / 40) + (safezoneX + (safezoneW - ((safezoneW / safezoneH) min 1.2))/2),
+            1 *((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) + (safezoneY + (safezoneH - (((safezoneW / safezoneH) min 1.2) / 1.2))/2),
+            12 *(((safezoneW / safezoneH) min 1.2) / 40),
+            23 *((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)
         ]
     };
 };

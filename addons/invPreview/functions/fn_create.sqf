@@ -1,5 +1,5 @@
 // KIV_fnc_create
-// Creates the preview environment: background sphere, cloned unit, cameras, render targets, and HUD
+// Creates the preview environment: background sphere, cloned unit, camera, render target, and HUD
 
 if (!isPiPEnabled) exitWith {
     systemChat "WARNING: Enable Picture-in-Picture (PIP) in video settings for character preview";
@@ -40,41 +40,29 @@ call KIV_fnc_syncDamage;
 // Apply stance based on equipped weapons
 call KIV_fnc_stance;
 
-// Setup top camera (upper body)
+// Setup camera
 private _camPos = _unit modelToWorld [0, 7, 1.3];
-private _camFov = 0.1;
-private _camTop = "camera" camCreate [0, 0, 0];
-_camTop camPreparePos _camPos;
-_camTop camPrepareTarget (_unit modelToWorld [0, 0, 1.45]);
-_camTop camPrepareFov _camFov;
-_camTop camCommitPrepared 0;
-KIV_preview_camTop = _camTop;
-
-// Setup bottom camera (lower body)
-private _camBottom = "camera" camCreate [0, 0, 0];
-_camBottom camPreparePos _camPos;
-_camBottom camPrepareTarget (_unit modelToWorld [0, 0, 0.4]);
-_camBottom camPrepareFov _camFov;
-_camBottom camCommitPrepared 0;
-KIV_preview_camBottom = _camBottom;
+private _camFov = 0.2;
+private _cam = "camera" camCreate [0, 0, 0];
+_cam camPreparePos _camPos;
+_cam camPrepareTarget (_unit modelToWorld [0, 0, 0.925]);
+_cam camPrepareFov _camFov;
+_cam camCommitPrepared 0;
+KIV_preview_cam = _cam;
 
 // Start camera rotation
-[_camTop, _camBottom] spawn {
-    params ["_camTop", "_camBottom"];
-    waitUntil {isNil "_camTop" || {isNull _camTop} || {camCommitted _camTop && camCommitted _camBottom}};
-    if (isNil "_camTop") exitWith {};
-    if (isNull _camTop) exitWith {};
+[_cam] spawn {
+    params ["_cam"];
+    waitUntil {isNil "_cam" || {isNull _cam} || {camCommitted _cam}};
+    if (isNil "_cam") exitWith {};
+    if (isNull _cam) exitWith {};
     call KIV_fnc_rotation;
 };
 
-// Create render targets
-private _renderTarget_Top = "rendertarget_KIV_preview_top";
-_camTop cameraEffect ["INTERNAL", "BACK", _renderTarget_Top];
-KIV_preview_renderTarget_Top = _renderTarget_Top;
-
-private _renderTarget_Bottom = "rendertarget_KIV_preview_bottom";
-_camBottom cameraEffect ["INTERNAL", "BACK", _renderTarget_Bottom];
-KIV_preview_renderTarget_Bottom = _renderTarget_Bottom;
+// Create render target
+private _renderTarget = "rendertarget_KIV_preview";
+_cam cameraEffect ["INTERNAL", "BACK", _renderTarget];
+KIV_preview_renderTarget = _renderTarget;
 
 // Add lighting
 private _light = "#lightpoint" createVehicle (_unit modelToWorld [0, 2, 1.3]);
@@ -88,11 +76,10 @@ private _luminance = apertureParams #3;
 private _brightness = 3000;
 // NVG effect at night
 if (_luminance <= 5.5) then {
-    _renderTarget_Top setPiPEffect [1];
-    _renderTarget_Bottom setPiPEffect [1];
+    _renderTarget setPiPEffect [1];
     _brightness = 20;
 };
-_light setLightIntensity _brightness;  // setLightIntensity 3000 = setlightBrightness 1
+_light setLightIntensity _brightness;
 
 // Display HUD
 private _layer = "KIV_preview_layer" call BIS_fnc_rscLayer;
@@ -110,7 +97,7 @@ if (KIV_betterInventory) then {
 };
 _control ctrlCommit 0;
 
-// Display background and link render targets to controls
+// Display background and link render target to control
 _display = uiNamespace getVariable "KIV_preview_display";
 if (!isNull _display) then {
     // Background replacement
@@ -123,19 +110,11 @@ if (!isNull _display) then {
     };
     _control ctrlCommit 0;
 
-    // Top display
-    _control = _display displayCtrl IDC_PREVIEW_TOP;
-    _control ctrlSetText format ["#(argb,512,512,1)r2t(%1,1.0)", _renderTarget_Top];
-    _control ctrlCommit 0;
-
-    // Bottom display
-    _control = _display displayCtrl IDC_PREVIEW_BOTTOM;
-    _control ctrlSetText format ["#(argb,512,512,1)r2t(%1,1.0)", _renderTarget_Bottom];
+    // Preview display
+    _control = _display displayCtrl IDC_PREVIEW;
+    _control ctrlSetText format ["#(argb,512,512,1)r2t(%1,1.0)", _renderTarget];
     _control ctrlCommit 0;
 };
-
-// Display replacement background, behind the preview
-
 
 // Delay reposition until display is ready
 0 spawn {
