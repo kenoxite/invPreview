@@ -11,13 +11,21 @@ if (isNull _unit) exitWith {};
 // Add new handlers
 private _invOpened = _unit addEventHandler ["InventoryOpened", KIV_fnc_inventoryOpened];
 _unit setVariable ["KIV_EH_preview_invOpened", _invOpened];
+
 private _invClosed = _unit addEventHandler ["InventoryClosed", KIV_fnc_inventoryClosed];
 _unit setVariable ["KIV_EH_preview_invClosed", _invClosed];
+
 private _take = _unit addEventHandler ["Take", KIV_fnc_take];
 _unit setVariable ["KIV_EH_preview_take", _take];
+
 private _put = _unit addEventHandler ["Put", KIV_fnc_put];
 _unit setVariable ["KIV_EH_preview_put", _put];
+
 private _killed = _unit addEventHandler ["Killed", KIV_fnc_cleanup];
 _unit setVariable ["KIV_EH_preview_killed", _killed];
+
 private _weaponChanged = _unit addEventHandler ["WeaponChanged", KIV_fnc_stance];
 _unit setVariable ["KIV_EH_preview_weaponChanged", _weaponChanged];
+
+private _dammaged = _unit addEventHandler ["Dammaged", KIV_fnc_syncDamage];
+_unit setVariable ["KIV_EH_preview_dammaged", _dammaged];

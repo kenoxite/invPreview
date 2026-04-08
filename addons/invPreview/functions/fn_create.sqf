@@ -29,11 +29,13 @@ private _unit = createVehicleLocal [typeOf player, [0,0,0], [], 0, "CAN_COLLIDE"
 private _unitPos = [_centerPos # 0, _centerPos # 1, (_centerPos # 2) - 4];
 _unit setPosATL _unitPos;
 _unit setDir 0;
-_unit allowDamage false;
 _unit setUnitLoadout getUnitLoadout player;
 _unit setFace (face player);
 _unit enableSimulation false;
 KIV_preview_unit = _unit;
+
+// Display player damage
+call KIV_fnc_syncDamage;
 
 // Apply stance based on equipped weapons
 call KIV_fnc_stance;

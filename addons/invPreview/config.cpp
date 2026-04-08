@@ -7,9 +7,9 @@ class CfgPatches {
         author = "kenoxite";
         authors[] = {"kenoxite"};
         url = "";
-        version = "1.4.1";
-        versionStr = "1.4.1";
-        versionAr[] = {1,4,1};
+        version = "1.4.2";
+        versionStr = "1.4.2";
+        versionAr[] = {1,4,2};
     };
 };
 
@@ -35,6 +35,7 @@ class CfgFunctions {
             class resetPosition {};
             class rotation {};
             class stance {};
+            class syncDamage {};
             class take {};
             class updateCloneLoadout {};
             class addEventHandlers {};
