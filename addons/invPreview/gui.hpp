@@ -8,6 +8,8 @@ class RscControlsGroupNoScrollbars;
 
 #include "\z\kiv\addons\invPreview\idc.hpp"
 
+#define ST_PICTURE				0x30
+
 class RscTitles
 {
     class KIV_PreviewHUD
@@ -53,7 +55,7 @@ class RscTitles
                     class PreviewControl_Top: RscPictureKeepAspect
                     {
                         idc = IDC_PREVIEW_TOP;
-                        style = 0x30;   // ST_PICTURE
+                        style = ST_PICTURE;
                         x = "0 * pixelGrid * pixelW";
                         y = "0 * pixelGrid * pixelH";
                         w = "33 * pixelGrid * pixelW";
@@ -65,7 +67,7 @@ class RscTitles
                     class PreviewControl_Bottom: RscPictureKeepAspect
                     {
                         idc = IDC_PREVIEW_BOTTOM;
-                        style = 0x30;   // ST_PICTURE
+                        style = ST_PICTURE;
                         x = "0 * pixelGrid * pixelW";
                         y = "0 * pixelGrid * pixelH";
                         w = "33 * pixelGrid * pixelW";
