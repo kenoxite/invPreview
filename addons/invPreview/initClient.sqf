@@ -34,7 +34,8 @@ if (isNil "KIV_preview_defaultPos") then {
 [] spawn {
     private _currentPlayer = player;
     private _lastPlayer = player;
-    
+    private _oldDamage = damage player;
+
     while {true} do {
         _currentPlayer = player;
         
@@ -47,6 +48,14 @@ if (isNil "KIV_preview_defaultPos") then {
             // Add handlers to new player
             [_currentPlayer] call KIV_fnc_addEventHandlers;
             _lastPlayer = _currentPlayer;
+        };
+
+        if (!isNil "KIV_preview_unit") then {
+            // Have to sync damage here so it properly updates when healed by someone else (and HandleHeal EH is too messy with locality)
+            if (_oldDamage != damage player) then {
+                call KIV_fnc_syncDamage;
+                _oldDamage = damage player;
+            };
         };
         
         sleep 1;

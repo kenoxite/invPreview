@@ -26,6 +26,3 @@ _unit setVariable ["KIV_EH_preview_killed", _killed];
 
 private _weaponChanged = _unit addEventHandler ["WeaponChanged", KIV_fnc_stance];
 _unit setVariable ["KIV_EH_preview_weaponChanged", _weaponChanged];
-
-private _dammaged = _unit addEventHandler ["Dammaged", KIV_fnc_syncDamage];
-_unit setVariable ["KIV_EH_preview_dammaged", _dammaged];

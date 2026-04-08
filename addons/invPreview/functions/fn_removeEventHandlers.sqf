@@ -41,9 +41,3 @@ if (_weaponChanged >= 0) then {
     _unit removeEventHandler ["Killed", _weaponChanged];
     _unit setVariable ["KIV_EH_preview_weaponChanged", nil];
 };
-
-private _dammaged = _unit getVariable ["KIV_EH_preview_dammaged", -1];
-if (_dammaged != -1) then {
-    _unit removeEventHandler ["Dammaged", _dammaged];
-    _unit setVariable ["KIV_EH_preview_dammaged", nil];
-};
