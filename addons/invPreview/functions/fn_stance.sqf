@@ -17,7 +17,7 @@ private _hasHandgun = _handgun != "";
 private _stance = call {
     if (_hasPrimary && {_current == _primary}) exitWith {"AidlPercMstpSlowWrflDnon_AI"};
     if (_hasHandgun && {_current == _handgun}) exitWith {"AidlPercMstpSlowWpstDnon_AI"};
-    if (_hasSecondary && {_current == _secondary}) exitWith {"AmovPercMstpSrasWlnrDnon_AmovPercMstpSlowWlnrDnon"};
+    if (_hasSecondary && {_current == _secondary}) exitWith {"AmovPercMstpSlowWlnrDnon"};
     if (_current isKindOf ["Binocular", configFile >> "CfgWeapons"]) exitWith {"AmovPercMstpSoptWbinDnon"};
     "AidlPercMstpSnonWnonDnon_AI"
 };
