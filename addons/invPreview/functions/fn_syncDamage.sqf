@@ -1,15 +1,14 @@
 // KIV_fnc_syncDamage
 // Copies damage state from source unit to preview unit
 
-if (isNil "KIV_preview_unit") exitWith {};
+if (isNil "KIV_unit") exitWith {};
 
-private _damage = damage player;
-KIV_preview_unit setDamage _damage;
+KIV_unit setDamage (damage player);
 
 private _hitPoints = getAllHitPointsDamage player;
 if (!isNil "_hitPoints") then {
     _hitPoints params ["", "_selections", "_damages"];
     {
-        KIV_preview_unit setHit [_x, _damages # _forEachIndex];
+        KIV_unit setHit [_x, _damages # _forEachIndex];
     } forEach _selections;
 };

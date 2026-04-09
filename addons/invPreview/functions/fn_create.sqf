@@ -22,7 +22,7 @@ private _backgroundTexture = call {
 };
 _background setObjectTexture [0, _backgroundTexture];
 _background setObjectTexture [1, _backgroundTexture];
-KIV_preview_background = _background;
+KIV_background = _background;
 
 // Clone player unit
 private _unit = createVehicleLocal [typeOf player, [0,0,0], [], 0, "CAN_COLLIDE"];
@@ -32,7 +32,7 @@ _unit setDir 0;
 _unit setUnitLoadout getUnitLoadout player;
 _unit setFace (face player);
 _unit enableSimulation false;
-KIV_preview_unit = _unit;
+KIV_unit = _unit;
 
 // Display player damage
 call KIV_fnc_syncDamage;
@@ -48,7 +48,7 @@ _cam camPreparePos _camPos;
 _cam camPrepareTarget (_unit modelToWorld [0, 0, 0.925]);
 _cam camPrepareFov _camFov;
 _cam camCommitPrepared 0;
-KIV_preview_cam = _cam;
+KIV_cam = _cam;
 
 // Start camera rotation
 [_cam] spawn {
@@ -62,28 +62,27 @@ KIV_preview_cam = _cam;
 // Create render target
 private _renderTarget = "rendertarget_KIV_preview";
 _cam cameraEffect ["INTERNAL", "BACK", _renderTarget];
-KIV_preview_renderTarget = _renderTarget;
+KIV_renderTarget = _renderTarget;
 
 // Add lighting
-private _light = "#lightpoint" createVehicle (_unit modelToWorld [0, 2, 1.3]);
+private _light = "#lightpoint" createVehicleLocal (_unit modelToWorld [0, 2, 1.3]);
 _light setLightAmbient [1,1,1]; 
 _light setLightColor [0,0,0]; 
 _light setLightDayLight true; 
 _light setLightAttenuation [0, 0.5, 1, 3, 0, 4, 5];
-KIV_preview_light = _light;
+KIV_light = _light;
 
-private _luminance = apertureParams #3;
-private _brightness = 3000;
+private _intensity = 3000; // 3000 = brightness 1
 // NVG effect at night
-if (_luminance <= 5.5) then {
+if ((apertureParams #3) <= 5.5) then {
     _renderTarget setPiPEffect [1];
-    _brightness = 20;
+    _intensity = 20;
 };
-_light setLightIntensity _brightness;
+_light setLightIntensity _intensity;
 
 // Display HUD
-private _layer = "KIV_preview_layer" call BIS_fnc_rscLayer;
-uiNamespace setVariable ["KIV_preview_hudLayer", _layer];
+private _layer = "KIV_layer" call BIS_fnc_rscLayer;
+uiNamespace setVariable ["KIV_hudLayer", _layer];
 _layer cutRsc ["KIV_PreviewHUD", "PLAIN", 0, true, true];
 
 // Make Ground container background invisible
@@ -98,7 +97,7 @@ if (KIV_betterInventory) then {
 _control ctrlCommit 0;
 
 // Display background and link render target to control
-_display = uiNamespace getVariable "KIV_preview_display";
+_display = uiNamespace getVariable "KIV_display";
 if (!isNull _display) then {
     // Background replacement
     _control = _display displayCtrl IDC_PREVIEW_BCKG;

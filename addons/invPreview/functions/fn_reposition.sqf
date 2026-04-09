@@ -5,7 +5,7 @@
 
 params [["_posX", ""], ["_posY", ""], ["_width", ""], ["_height", ""]];
 
-private _display = uiNamespace getVariable "KIV_preview_display";
+private _display = uiNamespace getVariable "KIV_display";
 if (isNil "_display") exitWith {};
 if (isNull _display) exitWith {};
 

@@ -2,29 +2,25 @@
 // Initializes global variables, default position, and event handlers for the inventory preview system
 
 // Detect Better Inventory mod
-private _cfgPatches = configFile >> "CfgPatches";
-KIV_betterInventory = isClass(_cfgPatches >> "bettinv_main");
-_cfgPatches = nil;
+KIV_betterInventory = isClass(configFile >> "CfgPatches" >> "bettinv_main");
 
 // Set default position based on mod detection
-if (isNil "KIV_preview_defaultPos") then {
-    KIV_preview_defaultPos = call {
-        if (KIV_betterInventory) exitWith {
-            [
-                safeZoneX + safeZoneW * 0.15729167,
-                safeZoneY + safeZoneH * 0.39351852,
-                safeZoneW * 0.1625,
-                safeZoneH * 0.425
-            ]
-        };
-        // Vanilla
+KIV_defaultPos = call {
+    if (KIV_betterInventory) exitWith {
         [
-            1 *(((safezoneW / safezoneH) min 1.2) / 40) + (safezoneX + (safezoneW - ((safezoneW / safezoneH) min 1.2))/2),
-            1 *((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) + (safezoneY + (safezoneH - (((safezoneW / safezoneH) min 1.2) / 1.2))/2),
-            12 *(((safezoneW / safezoneH) min 1.2) / 40),
-            23 *((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)
+            safeZoneX + safeZoneW * 0.15729167,
+            safeZoneY + safeZoneH * 0.39351852,
+            safeZoneW * 0.1625,
+            safeZoneH * 0.425
         ]
     };
+    // Vanilla
+    [
+        1 * (((safeZoneW / safeZoneH) min 1.2) / 40) + (safeZoneX + (safeZoneW - ((safeZoneW / safeZoneH) min 1.2)) / 2),
+        1 * ((((safeZoneW / safeZoneH) min 1.2) / 1.2) / 25) + (safeZoneY + (safeZoneH - (((safeZoneW / safeZoneH) min 1.2) / 1.2)) / 2),
+        12 * (((safeZoneW / safeZoneH) min 1.2) / 40),
+        23 * ((((safeZoneW / safeZoneH) min 1.2) / 1.2) / 25)
+    ]
 };
 
 // Add handlers to current player
@@ -50,8 +46,8 @@ if (isNil "KIV_preview_defaultPos") then {
             _lastPlayer = _currentPlayer;
         };
 
-        if (!isNil "KIV_preview_unit") then {
-            // Have to sync damage here so it properly updates when healed by someone else (and HandleHeal EH is too messy with locality)
+        if (!isNil "KIV_unit") then {
+            // Have to sync damage here so it properly updates when healed by someone else (HandleHeal EH is too messy with locality)
             if (_oldDamage != damage player) then {
                 call KIV_fnc_syncDamage;
                 _oldDamage = damage player;

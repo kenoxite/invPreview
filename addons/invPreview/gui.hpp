@@ -1,6 +1,5 @@
 // gui.hpp
 // Dialog definition for inventory preview HUD
-// Forward declares all required Rsc base classes and defines the preview layout
 
 class RscText;
 class RscPictureKeepAspect;
@@ -19,16 +18,16 @@ class RscTitles
         duration = 1e+6;
         fadeIn = 0;
         fadeOut = 0;
-        onLoad = "uiNamespace setVariable ['KIV_preview_display', _this select 0];";
+        onLoad = "uiNamespace setVariable ['KIV_display', _this select 0];";
         class controls
         {
             class PreviewBackground: RscText
             {
                 idc = IDC_PREVIEW_BCKG;
-                x = "1 * (((safezoneW / safezoneH) min 1.2) / 40) + (safezoneX + (safezoneW - ((safezoneW / safezoneH) min 1.2))/2)";
-                y = "1 * ((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) + (safezoneY + (safezoneH - (((safezoneW / safezoneH) min 1.2) / 1.2))/2)";
-                w = "12 * (((safezoneW / safezoneH) min 1.2) / 40)";
-                h = "23 * ((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
+                x = "1 * (((safeZoneW / safeZoneH) min 1.2) / 40) + (safeZoneX + (safeZoneW - ((safeZoneW / safeZoneH) min 1.2))/2)";
+                y = "1 * ((((safeZoneW / safeZoneH) min 1.2) / 1.2) / 25) + (safeZoneY + (safeZoneH - (((safeZoneW / safeZoneH) min 1.2) / 1.2))/2)";
+                w = "12 * (((safeZoneW / safeZoneH) min 1.2) / 40)";
+                h = "23 * ((((safeZoneW / safeZoneH) min 1.2) / 1.2) / 25)";
                 colorBackground[] = {0.050000001,0.050000001,0.050000001,0};
             };
 

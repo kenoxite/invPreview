@@ -2,6 +2,7 @@
 // Removes eventhandlers from a unit
 
 params ["_unit"];
+
 if (isNil "_unit") exitWith {};
 if (isNull _unit) exitWith {};
 
