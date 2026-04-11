@@ -127,7 +127,6 @@ if (!isNull _display) then {
         call KIV_fnc_cleanup;
     };
     call KIV_fnc_resetPosition;
-
     // Start camera rotation;
     call KIV_fnc_rotation;
 };

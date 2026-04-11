@@ -7,9 +7,9 @@ class CfgPatches {
         author = "kenoxite";
         authors[] = {"kenoxite"};
         url = "";
-        version = "2.0.2";
-        versionStr = "2.0.2";
-        versionAr[] = {2,0,2};
+        version = "2.0.3";
+        versionStr = "2.0.3";
+        versionAr[] = {2,0,3};
     };
 };
 

@@ -6,7 +6,7 @@ if (isNil "KIV_unit") exitWith {};
 private _radius = 7;
 private _maxLeft = -45;
 private _maxRight = 90;
-private _speed = 15; // Degrees per second (peak speed)
+private _speed = 15; // Degrees per second
 
 KIV_rotationHandle = [_radius, _speed, _maxLeft, _maxRight] spawn {
     params ["_radius", "_speed", "_maxLeft", "_maxRight"];
