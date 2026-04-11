@@ -118,5 +118,8 @@ if (!isNull _display) then {
 // Delay reposition until display is ready
 0 spawn {
     sleep 0.1;
+    if (isNull (findDisplay 602)) exitWith {
+        call KIV_fnc_cleanup;
+    };
     call KIV_fnc_resetPosition;
 };

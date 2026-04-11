@@ -22,6 +22,6 @@ KIV_rotationHandle = [_radius, _speed, _maxAngle] spawn {
         KIV_cam camPrepareRelPos [_relX, _relY, 0];
         KIV_cam camCommitPrepared 0.033;
 
-        waitUntil {camCommitted KIV_cam};
+        waitUntil {isNil "KIV_cam" || {camCommitted KIV_cam}};
     };
 };
