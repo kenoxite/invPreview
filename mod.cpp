@@ -15,6 +15,6 @@ dlcColor[] =
 	1
 };
 
-overview = "Shows a real-time 3D model of your character in the inventory screen."; // Overview text, displayed from the extension menu
+overview = "Displays your character directly in the inventory screen."; // Overview text, displayed from the extension menu
 hideName = 0; // Hide the extension name
 hidePicture = 0; // Hide the extension menu
