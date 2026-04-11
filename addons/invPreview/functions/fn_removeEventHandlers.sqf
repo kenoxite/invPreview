@@ -39,6 +39,6 @@ if (_killed >= 0) then {
 
 private _weaponChanged = _unit getVariable ["KIV_EH_preview_weaponChanged", -1];
 if (_weaponChanged >= 0) then {
-    _unit removeEventHandler ["Killed", _weaponChanged];
+    _unit removeEventHandler ["WeaponChanged", _weaponChanged];
     _unit setVariable ["KIV_EH_preview_weaponChanged", nil];
 };
