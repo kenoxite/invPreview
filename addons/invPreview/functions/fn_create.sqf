@@ -7,6 +7,8 @@ if (!isPiPEnabled) exitWith {
 
 #include "\z\kiv\addons\invPreview\idc.hpp"
 
+params [["_forceDisplay", false]];
+
 call KIV_fnc_cleanup;
 
 // Create background sphere at random far location
@@ -40,6 +42,17 @@ call KIV_fnc_syncDamage;
 // Apply stance based on equipped weapons
 call KIV_fnc_stance;
 
+// Ktweak - Display next weapon
+if (KIV_ktweak && {KTWK_ENW_opt_enabled}) then {
+    [_unit] spawn {
+        params ["_unit"];
+        [_unit] call KTWK_fnc_toggleHolsterDisplay;
+        // Double call to ensure correct positioning of holsters
+        sleep 0.1;
+        [_unit] call KTWK_fnc_toggleHolsterDisplay;
+    };
+};
+
 // Setup camera
 private _camPos = _unit modelToWorld [0, 7, 1.3];
 private _camFov = 0.2;
@@ -49,15 +62,6 @@ _cam camPrepareTarget (_unit modelToWorld [0, 0, 0.925]);
 _cam camPrepareFov _camFov;
 _cam camCommitPrepared 0;
 KIV_cam = _cam;
-
-// Start camera rotation
-[_cam] spawn {
-    params ["_cam"];
-    waitUntil {isNil "_cam" || {isNull _cam} || {camCommitted _cam}};
-    if (isNil "_cam") exitWith {};
-    if (isNull _cam) exitWith {};
-    call KIV_fnc_rotation;
-};
 
 // Create render target
 private _renderTarget = "rendertarget_KIV_preview";
@@ -116,10 +120,14 @@ if (!isNull _display) then {
 };
 
 // Delay reposition until display is ready
-0 spawn {
+[_forceDisplay] spawn {
+    params ["_forceDisplay"];
     sleep 0.1;
-    if (isNull (findDisplay 602)) exitWith {
+    if (!_forceDisplay && {isNull (findDisplay 602)}) exitWith {
         call KIV_fnc_cleanup;
     };
     call KIV_fnc_resetPosition;
+
+    // Start camera rotation;
+    call KIV_fnc_rotation;
 };

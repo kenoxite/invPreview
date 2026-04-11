@@ -1,8 +1,11 @@
 // initClient
 // Initializes global variables, default position, and event handlers for the inventory preview system
 
-// Detect Better Inventory mod
-KIV_betterInventory = isClass(configFile >> "CfgPatches" >> "bettinv_main");
+// Detect mods
+private _cfgPatches = configFile >> "cfgPatches";
+KIV_betterInventory = isClass (_cfgPatches >> "bettinv_main");
+KIV_ktweak = isClass (_cfgPatches >> "Ktweak");
+_cfgPatches = nil;
 
 // Set default position based on mod detection
 KIV_defaultPos = call {
