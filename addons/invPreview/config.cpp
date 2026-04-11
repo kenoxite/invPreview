@@ -21,7 +21,6 @@ class CfgFunctions {
             file = "\z\kiv\addons\invPreview\functions";
             class postInit {
                 postInit = 1;
-                file = "\z\kiv\addons\invPreview\initClient.sqf";
             };
         };
         class Main {
