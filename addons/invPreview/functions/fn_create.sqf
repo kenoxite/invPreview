@@ -126,7 +126,6 @@ if (!isNull _display) then {
     if (!_forceDisplay && {isNull (findDisplay 602)}) exitWith {
         call KIV_fnc_cleanup;
     };
-    call KIV_fnc_resetPosition;
-    // Start camera rotation;
     call KIV_fnc_rotation;
+    call KIV_fnc_resetPosition;
 };
