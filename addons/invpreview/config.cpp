@@ -1,7 +1,7 @@
 #include "\z\kiv\addons\invpreview\version.hpp"
 
 class CfgPatches {
-    class invpreview {
+    class invPreview {
         units[] = {};
         weapons[] = {};
         requiredVersion = 2.20;
