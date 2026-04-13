@@ -5,7 +5,7 @@ if (!isPiPEnabled) exitWith {
     systemChat "WARNING: Enable Picture-in-Picture (PIP) in video settings for character preview";
 };
 
-#include "\z\kiv\addons\invPreview\idc.hpp"
+#include "\z\kiv\addons\invpreview\idc.hpp"
 
 params [["_forceDisplay", false]];
 
@@ -46,10 +46,8 @@ call KIV_fnc_stance;
 if (KIV_ktweak && {KTWK_ENW_opt_enabled}) then {
     [_unit] spawn {
         params ["_unit"];
-        [_unit] call KTWK_fnc_toggleHolsterDisplay;
-        // Double call to ensure correct positioning of holsters
-        sleep 0.1;
-        [_unit] call KTWK_fnc_toggleHolsterDisplay;
+        [_unit] call KTWK_fnc_ENW_addHolsters;
+        [_unit] call KTWK_fnc_ENW_toggleHolsterDisplay;
     };
 };
 

@@ -1,5 +1,7 @@
+#include "\z\kiv\addons\invpreview\version.hpp"
+
 class CfgPatches {
-    class invPreview {
+    class invpreview {
         units[] = {};
         weapons[] = {};
         requiredVersion = 2.20;
@@ -7,24 +9,24 @@ class CfgPatches {
         author = "kenoxite";
         authors[] = {"kenoxite"};
         url = "";
-        version = "2.0.3";
-        versionStr = "2.0.3";
-        versionAr[] = {2,0,3};
+        version = VERSION;
+        versionStr = VERSION_STR;
+        versionAr[] = {VERSION_AR};
     };
 };
 
-#include "\z\kiv\addons\invPreview\gui.hpp"
+#include "\z\kiv\addons\invpreview\gui.hpp"
 
 class CfgFunctions {
     class KIV {
         class Init {
-            file = "\z\kiv\addons\invPreview\functions";
+            file = "\z\kiv\addons\invpreview\functions";
             class postInit {
                 postInit = 1;
             };
         };
         class Main {
-            file = "\z\kiv\addons\invPreview\functions";
+            file = "\z\kiv\addons\invpreview\functions";
             class cleanup {};
             class create {};
             class inventoryClosed {};

@@ -1,7 +1,7 @@
 // KIV_fnc_reposition
 // Moves and resizes the preview group and its child control
 
-#include "\z\kiv\addons\invPreview\idc.hpp"
+#include "\z\kiv\addons\invpreview\idc.hpp"
 
 params [["_posX", ""], ["_posY", ""], ["_width", ""], ["_height", ""]];
 

@@ -9,3 +9,11 @@ if (_unit != player) exitWith {};
 
 call KIV_fnc_updateCloneLoadout;
 call KIV_fnc_stance;
+
+// Ktweak - Display next weapon
+if (KIV_ktweak && {KTWK_ENW_opt_enabled}) then {
+    0 spawn {
+        [KIV_unit] call KTWK_fnc_ENW_addHolsters;
+        [KIV_unit] call KTWK_fnc_ENW_toggleHolsterDisplay;
+    };
+};

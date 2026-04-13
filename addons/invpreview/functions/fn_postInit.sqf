@@ -4,7 +4,7 @@
 // Detect mods
 private _cfgPatches = configFile >> "cfgPatches";
 KIV_betterInventory = isClass (_cfgPatches >> "bettinv_main");
-KIV_ktweak = isClass (_cfgPatches >> "Ktweak");
+KIV_ktweak = isClass (_cfgPatches >> "ktweak");
 _cfgPatches = nil;
 
 // Set default position based on mod detection

@@ -5,7 +5,7 @@ class RscText;
 class RscPictureKeepAspect;
 class RscControlsGroupNoScrollbars;
 
-#include "\z\kiv\addons\invPreview\idc.hpp"
+#include "\z\kiv\addons\invpreview\idc.hpp"
 
 #define ST_PICTURE 0x30
 #define ST_MULTI 16
