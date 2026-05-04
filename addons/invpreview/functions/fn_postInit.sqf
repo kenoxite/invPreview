@@ -1,9 +1,12 @@
 // initClient
 // Initializes global variables, default position, and event handlers for the inventory preview system
 
+#include "\z\kiv\addons\invpreview\ace.hpp"
+
 // Detect mods
 private _cfgPatches = configFile >> "cfgPatches";
 KIV_betterInventory = isClass (_cfgPatches >> "bettinv_main");
+KIV_aceInventory = isClass (_cfgPatches >> "ace_inventory");
 KIV_ktweak = isClass (_cfgPatches >> "ktweak");
 _cfgPatches = nil;
 
@@ -15,6 +18,14 @@ KIV_defaultPos = call {
             safeZoneY + safeZoneH * 0.39351852,
             safeZoneW * 0.1625,
             safeZoneH * 0.425
+        ]
+    };
+    if (KIV_aceInventory) exitWith {
+        [
+            X_PART(1),
+            Y_PART(1),
+            W_PART(12),
+            H_PART(22.5)
         ]
     };
     // Vanilla

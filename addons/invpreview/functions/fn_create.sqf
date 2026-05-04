@@ -103,10 +103,12 @@ _display = uiNamespace getVariable "KIV_display";
 if (!isNull _display) then {
     // Background replacement
     _control = _display displayCtrl IDC_PREVIEW_BCKG;
-    if (KIV_betterInventory) then {
-        _control = _display displayCtrl IDC_PREVIEW_BCKG_BETTERINV;
-        _control ctrlSetBackgroundColor [0.0,0.0,0.0,0.8];
-    } else {
+    call {
+        if (KIV_betterInventory) exitWith {
+            _control = _display displayCtrl IDC_PREVIEW_BCKG_BETTERINV;
+            _control ctrlSetBackgroundColor [0.0,0.0,0.0,0.8];
+        };
+        _control ctrlSetPosition KIV_defaultPos;
         _control ctrlSetBackgroundColor [0.050000001,0.050000001,0.050000001,0.69999999];
     };
     _control ctrlCommit 0;
