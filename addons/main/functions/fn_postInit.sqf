@@ -51,10 +51,14 @@ if (isNil "KIV_EH_playerViewChanged") then {
         params ["_previousUnit", "_newUnit", "_vehicleIn","_oldCameraOn", "_newCameraOn", "_uav"];
         if (!KIV_ktweak) then {
             KTWK_player = [] call KIV_fnc_getPlayer;
+        };
+        if (KTWK_player != KTWK_lastPlayer) then {
+            [KTWK_lastPlayer] call KIV_fnc_removeEventHandlers;
+            [KTWK_player] call KIV_fnc_addEventHandlers;
+        };
+        if (!KIV_ktweak) then {
             KTWK_lastPlayer = KTWK_player;
         };
-        [_oldCameraOn] call KIV_fnc_removeEventHandlers;
-        [_newCameraOn] call KIV_fnc_addEventHandlers;
     }];
 };
 
