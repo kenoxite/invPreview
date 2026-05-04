@@ -15,6 +15,7 @@ if (!KIV_ktweak) then {
     KTWK_player = [] call KIV_fnc_getPlayer;
     KTWK_lastPlayer = KTWK_player;
 };
+KIV_lastPlayer = player;
 
 // Set default position based on mod detection
 KIV_defaultPos = call {
@@ -44,7 +45,7 @@ KIV_defaultPos = call {
 };
 
 // Add handlers to current player
-[KTWK_player] call KIV_fnc_addEventHandlers;
+[player] call KIV_fnc_addEventHandlers;
 
 if (isNil "KIV_EH_playerViewChanged") then {
     KIV_EH_playerViewChanged = addMissionEventHandler ["PlayerViewChanged", {
@@ -52,13 +53,11 @@ if (isNil "KIV_EH_playerViewChanged") then {
         if (!KIV_ktweak) then {
             KTWK_player = [] call KIV_fnc_getPlayer;
         };
-        if (KTWK_player != KTWK_lastPlayer) then {
-            [KTWK_lastPlayer] call KIV_fnc_removeEventHandlers;
+        if (KTWK_player != KIV_lastPlayer) then {
+            [KIV_lastPlayer] call KIV_fnc_removeEventHandlers;
             [KTWK_player] call KIV_fnc_addEventHandlers;
         };
-        if (!KIV_ktweak) then {
-            KTWK_lastPlayer = KTWK_player;
-        };
+        KIV_lastPlayer = KTWK_player;
     }];
 };
 
