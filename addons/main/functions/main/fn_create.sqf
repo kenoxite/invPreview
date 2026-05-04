@@ -5,7 +5,7 @@ if (!isPiPEnabled) exitWith {
     systemChat "WARNING: Enable Picture-in-Picture (PIP) in video settings for character preview";
 };
 
-#include "\z\kiv\addons\invpreview\idc.hpp"
+#include "\z\invpreview\addons\main\idc.hpp"
 
 params [["_forceDisplay", false]];
 
@@ -27,13 +27,18 @@ _background setObjectTexture [1, _backgroundTexture];
 KIV_background = _background;
 
 // Clone player unit
-private _unit = createVehicleLocal [typeOf player, [0,0,0], [], 0, "CAN_COLLIDE"];
+private _player = KTWK_player;
+private _unit = createVehicleLocal [typeOf _player, [0,0,0], [], 0, "CAN_COLLIDE"];
 private _unitPos = [_centerPos # 0, _centerPos # 1, (_centerPos # 2) - 4];
 _unit setPosATL _unitPos;
 _unit setDir 0;
-_unit setUnitLoadout getUnitLoadout player;
-_unit setFace (face player);
+_unit setUnitLoadout getUnitLoadout _player;
+_unit setFace (face _player);
 _unit enableSimulation false;
+private _textures = getObjectTextures _player;
+{ _unit setObjectTexture [_forEachIndex, _x] } forEach _textures;
+private _materials = getObjectMaterials _player;
+{ _unit setObjectMaterial [_forEachIndex, _x] } forEach _materials;
 KIV_unit = _unit;
 
 // Display player damage

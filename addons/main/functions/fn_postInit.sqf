@@ -1,7 +1,7 @@
 // initClient
 // Initializes global variables, default position, and event handlers for the inventory preview system
 
-#include "\z\kiv\addons\invpreview\ace.hpp"
+#include "\z\invpreview\addons\main\ace.hpp"
 
 // Detect mods
 private _cfgPatches = configFile >> "cfgPatches";
@@ -9,6 +9,12 @@ KIV_betterInventory = isClass (_cfgPatches >> "bettinv_main");
 KIV_aceInventory = isClass (_cfgPatches >> "ace_inventory");
 KIV_ktweak = isClass (_cfgPatches >> "ktweak");
 _cfgPatches = nil;
+
+// Player reference
+if (!KIV_ktweak) then {
+    KTWK_player = [] call KIV_fnc_getPlayer;
+    KTWK_lastPlayer = KTWK_player;
+};
 
 // Set default position based on mod detection
 KIV_defaultPos = call {
@@ -38,33 +44,31 @@ KIV_defaultPos = call {
 };
 
 // Add handlers to current player
-[player] call KIV_fnc_addEventHandlers;
+[KTWK_player] call KIV_fnc_addEventHandlers;
+
+if (isNil "KIV_EH_playerViewChanged") then {
+    KIV_EH_playerViewChanged = addMissionEventHandler ["PlayerViewChanged", {
+        params ["_previousUnit", "_newUnit", "_vehicleIn","_oldCameraOn", "_newCameraOn", "_uav"];
+        if (!KIV_ktweak) then {
+            KTWK_player = [] call KIV_fnc_getPlayer;
+            KTWK_lastPlayer = KTWK_player;
+        };
+        [_oldCameraOn] call KIV_fnc_removeEventHandlers;
+        [_newCameraOn] call KIV_fnc_addEventHandlers;
+    }];
+};
 
 // Continuous player monitoring
 [] spawn {
-    private _currentPlayer = player;
-    private _lastPlayer = player;
-    private _oldDamage = damage player;
+    private _oldDamage = damage KTWK_player;
 
     while {true} do {
-        _currentPlayer = player;
-        
-        // Check if player changed
-        if (!isNull _currentPlayer && {_currentPlayer != _lastPlayer}) then {
-            // Remove handlers from old player
-            if (!isNull _lastPlayer) then {
-                [_lastPlayer] call KIV_fnc_removeEventHandlers;
-            };
-            // Add handlers to new player
-            [_currentPlayer] call KIV_fnc_addEventHandlers;
-            _lastPlayer = _currentPlayer;
-        };
 
         if (!isNil "KIV_unit") then {
             // Have to sync damage here so it properly updates when healed by someone else (HandleHeal EH is too messy with locality)
-            if (_oldDamage != damage player) then {
+            if (_oldDamage != damage KTWK_player) then {
                 call KIV_fnc_syncDamage;
-                _oldDamage = damage player;
+                _oldDamage = damage KTWK_player;
             };
         };
         

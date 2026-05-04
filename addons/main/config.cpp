@@ -1,4 +1,4 @@
-#include "\z\kiv\addons\invpreview\version.hpp"
+#include "\z\invpreview\addons\main\version.hpp"
 
 class CfgPatches {
     class invPreview {
@@ -15,18 +15,18 @@ class CfgPatches {
     };
 };
 
-#include "\z\kiv\addons\invpreview\gui.hpp"
+#include "\z\invpreview\addons\main\gui.hpp"
 
 class CfgFunctions {
     class KIV {
         class Init {
-            file = "\z\kiv\addons\invpreview\functions";
+            file = "\z\invpreview\addons\main\functions";
             class postInit {
                 postInit = 1;
             };
         };
         class Main {
-            file = "\z\kiv\addons\invpreview\functions";
+            file = "\z\invpreview\addons\main\functions\main";
             class cleanup {};
             class create {};
             class inventoryClosed {};
@@ -41,6 +41,10 @@ class CfgFunctions {
             class updateCloneLoadout {};
             class addEventHandlers {};
             class removeEventHandlers {};
+        };
+        class Helpers {
+            file = "\z\invpreview\addons\main\functions\helpers";
+            class getPlayer {};
         };
     };
 };

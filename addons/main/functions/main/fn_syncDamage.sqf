@@ -3,9 +3,10 @@
 
 if (isNil "KIV_unit") exitWith {};
 
-KIV_unit setDamage (damage player);
+private _player = KTWK_player;
+KIV_unit setDamage (damage _player);
 
-private _hitPoints = getAllHitPointsDamage player;
+private _hitPoints = getAllHitPointsDamage _player;
 if (!isNil "_hitPoints") then {
     _hitPoints params ["", "_selections", "_damages"];
     {

@@ -3,15 +3,16 @@
 
 if (isNil "KIV_unit") exitWith {};
 
-private _current = currentWeapon player;
+private _player = KTWK_player;
+private _current = currentWeapon _player;
 
-private _primary = primaryWeapon player;
+private _primary = primaryWeapon _player;
 private _hasPrimary = _primary != "";
 
-private _secondary = secondaryWeapon player;
+private _secondary = secondaryWeapon _player;
 private _hasSecondary = _secondary != "";
 
-private _handgun = handgunWeapon player;
+private _handgun = handgunWeapon _player;
 private _hasHandgun = _handgun != "";
 
 private _stance = call {

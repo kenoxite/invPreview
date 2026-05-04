@@ -5,7 +5,7 @@ if (isNull (findDisplay 602)) exitWith {};
 
 params ["_unit", "_container", "_item"];
 
-if (_unit != player) exitWith {};
+if (_unit != KTWK_player) exitWith {};
 call KIV_fnc_updateCloneLoadout;
 call KIV_fnc_stance;
 

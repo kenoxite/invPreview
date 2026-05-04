@@ -6,7 +6,7 @@ if (!canSuspend) exitWith {
 };
 params ["_unit", "_container"];
 
-if (_unit != player) exitWith {};
+if (_unit != KTWK_player) exitWith {};
 
 // Prevent rapid double opening
 if (_unit getVariable ["KIV_openingInv", false]) exitWith {};
