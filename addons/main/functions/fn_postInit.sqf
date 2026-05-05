@@ -47,31 +47,34 @@ KIV_defaultPos = call {
 // Add handlers to current player
 [player] call KIV_fnc_addEventHandlers;
 
-if (isNil "KIV_EH_playerViewChanged") then {
-    KIV_EH_playerViewChanged = addMissionEventHandler ["PlayerViewChanged", {
-        params ["_previousUnit", "_newUnit", "_vehicleIn","_oldCameraOn", "_newCameraOn", "_uav"];
-        if (!KIV_ktweak) then {
-            KTWK_player = [] call KIV_fnc_getPlayer;
-        };
-        if (KTWK_player != KIV_lastPlayer) then {
-            [KIV_lastPlayer] call KIV_fnc_removeEventHandlers;
-            [KTWK_player] call KIV_fnc_addEventHandlers;
-        };
-        KIV_lastPlayer = KTWK_player;
-    }];
-};
-
 // Continuous player monitoring
 [] spawn {
-    private _oldDamage = damage KTWK_player;
+    private _currentPlayer = player;
+    private _lastPlayer = player;
+    private _oldDamage = damage player;
 
     while {true} do {
+        _currentPlayer = [] call KIV_fnc_getPlayer;
+        
+        // Check if player changed
+        if (!isNull _currentPlayer && {_currentPlayer != _lastPlayer}) then {
+            // Remove handlers from old player
+            if (!isNull _lastPlayer) then {
+                [_lastPlayer] call KIV_fnc_removeEventHandlers;
+            };
+            // Add handlers to new player
+            [_currentPlayer] call KIV_fnc_addEventHandlers;
+            _lastPlayer = _currentPlayer;
+            if (!KIV_ktweak) then {
+                KTWK_player = _currentPlayer;
+            };
+        };
 
         if (!isNil "KIV_unit") then {
             // Have to sync damage here so it properly updates when healed by someone else (HandleHeal EH is too messy with locality)
-            if (_oldDamage != damage KTWK_player) then {
+            if (_oldDamage != damage player) then {
                 call KIV_fnc_syncDamage;
-                _oldDamage = damage KTWK_player;
+                _oldDamage = damage player;
             };
         };
         
